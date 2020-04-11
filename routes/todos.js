@@ -4,28 +4,14 @@ const db = require("../models");
 const todoHelper = require("../helpers/todos");
 
 // /api/todos
-router.get("/", (req, res) => {
-	todoHelper.getTodos(req, res);
-});
-
-// /api/todos
-router.post("/", (req, res) => {
-	todoHelper.createTodo(req, res);
-});
+router.route("/")
+	.get(todoHelper.getTodos)
+	.post(todoHelper.createTodo)
 
 // /api/todos/:id
-router.get("/:id", (req, res) => {	
-	todoHelper.getTodo(req, res);
-});
-
-// /api/todos/:id
-router.put("/:id", (req, res) => {
-	todoHelper.updateTodo(req, res);
-});
-
-// /api/todos/:id
-router.delete("/:id", (req, res) => {
-	todoHelper.deleteTodo(req, res);
-});
+router.route("/:id")
+	.get(todoHelper.getTodo)
+	.put(todoHelper.updateTodo)
+	.delete(todoHelper.deleteTodo)
 
 module.exports = router;
