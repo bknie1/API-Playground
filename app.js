@@ -1,7 +1,6 @@
 const express 			= require("express");
 const mongoose 			= require("mongoose");
 const bp				= require("body-parser");
-const methodOverride 	= require("method-override"); // Required for PUT
 
 // Models
 const Todo 				= require("./models/todo");
@@ -9,10 +8,9 @@ const Todo 				= require("./models/todo");
 // Express Configuration
 const app = express()
 
+app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/views"));
 app.use(bp.urlencoded({extended: true}));
-app.use(methodOverride("_method")); // For PUT requests
-app.use(express.static("public")); // js, css, etc.
-
 // Globals ------------------------------------------------------
 const port = 3000;
 // ==============================================================
@@ -21,9 +19,7 @@ const port = 3000;
 const apiRoutes = require("./routes/todos");
 
 app.get("/", (req, res) => {
-	res.send({
-		message: "Hello from Root!"
-	});
+	res.sendFile("index.html");
 });
 
 app.use("/api/todos", apiRoutes);
